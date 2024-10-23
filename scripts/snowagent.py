@@ -29,14 +29,23 @@ def get_snowagent_version():
         output = output.decode()
 
         try:
-            version = output.split('+build')[0]
-            build = output.split('+build-')[1].split('-rev-')[0]
-            rev = output.split('-rev-')[1]
+            # Split to extract version and the rest
+            version_part = output.split('+private-build')[0]
+            build_part = output.split('+private-build-')[1]
+            
+            # Extract build and revision information from the remaining part
+            build = build_part.split('-rev-')[0]
+            rev = build_part.split('-rev-')[1]
 
-            version_return = {"version":version,"version_long":output,"build":build,"rev":rev}
+            version_return = {
+                "version": version_part,
+                "version_long": output,
+                "build": build,
+                "rev": rev
+            }
             return version_return
-        except Exception:
-            return {"version":"","version_long":""}
+        except Exception as e:
+            return {"version": "", "version_long": "", "error": str(e)}
     else:
         return {}
         

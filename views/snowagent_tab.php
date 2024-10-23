@@ -1,4 +1,14 @@
 <div id="snowagent-tab"></div>
+<div id="lister" style="font-size: large; float: right;">
+    <a href="/show/listing/snowagent/snowagent" title="List">
+        <i class="btn btn-default tab-btn fa fa-list"></i>
+    </a>
+</div>
+<div id="report_btn" style="font-size: large; float: right;">
+    <a href="/show/report/snowagent/snowagent_report" title="Report">
+        <i class="btn btn-default tab-btn fa fa-th"></i>
+    </a>
+</div>
 <h2 data-i18n="snowagent.snowagent"></h2>
 
 <div id="snowagent-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
@@ -24,14 +34,15 @@ $(document).on('appReady', function(){
                 for (var prop in d){
                     // Skip skipThese
                     if(skipThese.indexOf(prop) == -1){
-                        if (d[prop] == ''){
+                        if (d[prop] == null || d[prop] === '') {
                             // Do nothing for empty values to blank them
 
                         } else if((prop == 'software_scan_running_processes' || prop == 'software_scan_jar' || prop == 'http_ssl_verify') && d[prop] == 1){
                             rows = rows + '<tr><th>'+i18n.t('snowagent.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                         } else if((prop == 'software_scan_running_processes' || prop == 'software_scan_jar' || prop == 'http_ssl_verify') && d[prop] == 0){
                             rows = rows + '<tr><th>'+i18n.t('snowagent.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-
+                        } else if((prop == 'version_long')){
+                            // rows = rows + '<tr><th>'+i18n.t('snowagent.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                         } else {
                             rows = rows + '<tr><th>'+i18n.t('snowagent.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                         }
